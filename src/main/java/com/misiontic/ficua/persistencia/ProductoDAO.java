@@ -10,54 +10,29 @@ import java.util.List;
 
 /**
  *
- * @author santi
  */
-public class ProductoDAO implements Dao<Producto>
-{
-    private ConexionBD connection;   
-    
-    public ProductoDAO()
-    {
-        this.connection = new ConexionBD();
+  @author Luis Cala
+ 
+ public class ProductoDAO {
+ 
+    public ArrayList<Productos> consultarProducto(){
+        ArrayList<Productos> lista = new ArrayList<> ();
+        ConexionBD con = New ConexionBD(); 
+        ResultSet rs = con.ejecutarQuery("");
+        try{
+            while (rs.next()){
+                int id = rs.getInt("IdProductos");      
+                String nombre = rs.getString ("Nombre");
+                int unidades = rs.getString ("Numero_de_Unidades");
+                String disponiblilidad = rs.getString ("Desponibilidad");            
+                String descripcion = rs.getString ("Descripción_del_Producto");
+            
+                Productos F = new Productos (nombre, descripcion, unidades, disponibilidad);
+                lista.add (F);            
+             }
+          } catch(SQLException ex){ 
+                return null;
+          }
+          return lista;  
     }
-    
-    @Override
-    public List<Producto> getAll() throws Exception 
-    {
-        List<Producto> lista = new ArrayList<>();             
-        ResultSet rs = connection.ejecutarQuery("SELECT * FROM productos");    
-        while (rs.next()) 
-        {
-            int id = rs.getInt("id");
-            String nombre = rs.getString("nombre");                
-            Producto p = new Producto(id, nombre);
-            lista.add(p);
-        }      
-        
-        return lista;
-    }
-
-    @Override
-    public Producto getBy(int id) throws Exception 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean save(Producto t) throws Exception 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean update(Producto t) throws Exception 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean delete(Producto t) throws Exception 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-}
+ }
