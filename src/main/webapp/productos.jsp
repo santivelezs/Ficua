@@ -24,26 +24,37 @@
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
-                            <th scope="col">Nombre</th>    
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Imagen</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <%
                         ProductoDAO dao = new ProductoDAO();
-                        boolean hayDatos = dao.getAll().size() > 0 ? true:false;
+                        boolean hayDatos = false;
+                        try {
+                            hayDatos = dao.getAll().size() > 0;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     %>
                     <tbody>
                         <% if (hayDatos) { %>
-                        <%  for (Producto p : dao.getAll()) { %>
-                        <tr>
-                            <td scope="row"><%= p.getId() %></td>
-                            <td><%= p.getNombre() %></td>                            
-                            <td>
-                                <button type="button" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></button>
-                                <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
-                        <% } %>
+                        <% try {
+                            for (Producto p : dao.getAll()) { %>
+                            <tr>
+                                <td scope="row"><%= p.getId() %></td>
+                                <td><%= p.getNombre() %></td>
+                                <td> <img src="<%= p.getFoto() %>" width="100px" height="100px"> </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></button>
+                                    <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            <% }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } %>
                         <% } else { %>
                         <tr>
                             <td colspan="5">No hay datos</td>

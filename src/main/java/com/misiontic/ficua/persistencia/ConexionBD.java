@@ -13,9 +13,9 @@ public class ConexionBD
 {
     private String conectorInstalado = "jdbc:mysql:";
     private String host = "localhost:3306";
-    private String baseDatos = "mercadopopular";
-    private String username = "santi";
-    private String password = "1926";
+    private String baseDatos = "bdficua";
+    private String username = "root";
+    private String password = "19karen";
     private Connection conexion;
     private Statement ejecutor;
 
@@ -40,7 +40,7 @@ public class ConexionBD
             conexion = DriverManager.getConnection(cadenaConexion, username, password);
             ejecutor = conexion.createStatement();
             ejecutor.setQueryTimeout(30);  // set timeout to 30 sec.
-            //System.out.println("conexión creada: "+conexion);
+            System.out.println("conexión creada: "+conexion);
         }
         catch(Exception e)
         {
@@ -69,7 +69,8 @@ public class ConexionBD
         ResultSet rs = null;
         try
         {
-            int cant = ejecutor.executeUpdate(sql);
+
+            int cant = ejecutor.executeUpdate(sql,1);
             if (cant > 0) {
                 rs = ejecutor.getGeneratedKeys();
             }
