@@ -44,7 +44,21 @@ import java.util.List;
 
     @Override
     public Producto getBy(int id) throws Exception {
-        return null;
+        ConexionBD con = new ConexionBD();
+        ResultSet rs = con.ejecutarQuery("select * from producto where id = " + id);
+        try{
+            rs.next();
+            String nombre = rs.getString ("nombre");
+            float valorUnitario= rs.getFloat ("valor_unitario");
+            String descripcion = rs.getString ("descripcion");
+            String foto = rs.getString("foto");
+            return new Producto (id,nombre,foto,valorUnitario,descripcion);
+        } catch(SQLException ex){
+            return null;
+        }
+        finally {
+            con.desconectar();
+        }
     }
 
     @Override

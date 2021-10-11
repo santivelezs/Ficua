@@ -30,4 +30,36 @@ public class LogicaProductos {
             return false;
         }
     }
+
+    public Producto cargarProducto(int id) {
+        ProductoDAO dao = new ProductoDAO();
+        try {
+            return dao.getBy(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean actualizarProducto(Producto producto) {
+        ProductoDAO dao = new ProductoDAO();
+        try {
+            dao.update(producto);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Boolean borrarProducto(Producto producto) {
+        ProductoDAO dao = new ProductoDAO();
+        try {
+            dao.delete(producto);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
